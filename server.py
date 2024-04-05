@@ -25,7 +25,8 @@ def PredictModel():
 
 @app.route("/refreshDataset", methods = ['POST'])
 def RefreshDataset():
-	response = minimalGeneral.RefreshDataset()
+	data = request.json()
+	response = minimalGeneral.RefreshDataset(data)
 	return jsonify(response)
 
 if __name__ == "__main__":
