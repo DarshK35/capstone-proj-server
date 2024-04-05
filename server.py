@@ -20,13 +20,13 @@ def TrainModel():
 
 @app.route("/predictModel", methods = ["POST"])
 def PredictModel():
-	minimalPredictor.PredictModel()
+	data = request.json
+	response = minimalPredictor.PredictModel(data)
 	return jsonify({"result": "OK"})
 
 @app.route("/refreshDataset", methods = ['POST'])
 def RefreshDataset():
-	data = request.json()
-	response = minimalGeneral.RefreshDataset(data)
+	response = minimalGeneral.RefreshDataset()
 	return jsonify(response)
 
 if __name__ == "__main__":

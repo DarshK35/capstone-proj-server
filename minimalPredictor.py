@@ -1,6 +1,9 @@
 import json
 import pickle
 
+import numpy as np
+import pandas as pd
+
 settings = json.loads(open("appSettings.json", "r").read())
 
 def CreateModel():
@@ -45,9 +48,6 @@ def CreateModel():
 
 
 def TrainModel():
-	import numpy as np
-	import pandas as pd
-
 	from keras.models import load_model
 	from keras.callbacks import EarlyStopping
 	from sklearn.preprocessing import StandardScaler
@@ -92,7 +92,8 @@ def TrainModel():
 			"result": "OK",
 			"message": "Model trained successfully",
 			"trainStatistics": history.history,
-			"epochsTrained": len(history.history["loss"])
+			"epochsTrained": len(history.history["loss"]),
+			"finalAccuracy": (1 - history.history["val_loss"][-1]) * 100
 		}
 		return response
 	except Exception as ex:
@@ -103,7 +104,5 @@ def TrainModel():
 
 
 def PredictModel(data: dict):
-	import numpy as np
-	import pandas as pd
 
 	[]
