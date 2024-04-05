@@ -1,0 +1,100 @@
+{
+	"dataUrl": "https://script.google.com/macros/s/AKfycbxyndwek6FX-MLDwgBmb8XWxQrDZ7O4NPc_pOj-YcTVoPz6jSzwrquyri-fkQ8LxhCZ/exec?action=getData",
+	"dataPath": "Saved/dataset.json",
+	"datasetParams": {
+		"features": [
+			"Passenger_Count",
+			"Pickup_Longitude",
+			"Pickup_Latitude",
+			"Dropoff_Longitude",
+			"Dropoff_Latitude"
+		],
+		"target": "Price_Taken"
+	},
+	"modelPath": "Saved/trained_model.keras",
+	"model": {
+		"layers": [
+			{
+				"type": "Dense",
+				"parameters": {
+					"units": 256,
+					"activation": "relu"
+				}
+			},
+			{
+				"type": "BatchNormalization",
+				"parameters": {}
+			},
+			{
+				"type": "Dropout",
+				"parameters" : {
+					"rate": 0.2
+				}
+			},
+			{
+				"type": "Dense",
+				"parameters": {
+					"units": 512,
+					"activation": "relu"
+				}
+			},
+			{
+				"type": "BatchNormalization",
+				"parameters": {}
+			},
+			{
+				"type": "Dropout",
+				"parameters": {
+					"rate": 0.3
+				}
+			},
+			{
+				"type": "Dense",
+				"parameters": {
+					"units": 512,
+					"activation": "relu"
+				}
+			},
+			{
+				"type": "BatchNormalization",
+				"parameters": {}
+			},
+			{
+				"type": "Dropout",
+				"parameters": {
+					"rate": 0.3
+				}
+			},
+			{
+				"type": "Dense",
+				"parameters": {
+					"units": 256,
+					"activation": "relu"
+				}
+			},
+			{
+				"type": "BatchNormalization",
+				"parameters": {}
+			},
+			{
+				"type": "Dropout",
+				"parameters": {
+					"rate": 0.2
+				}
+			},
+			{
+				"type": "Dense",
+				"parameters": {
+					"units": 1
+				}
+			}
+		],
+		"xTrainColumns": 5,
+		"trainEpochs": 250
+	},
+
+	"scalerPath": {
+		"xScaler": "Saved/xScaler.pkl",
+		"yScaler": "Saved/yScaler.pkl"
+	}
+}
