@@ -29,7 +29,7 @@ def RefreshDataset() -> dict:
 
 	return resultStatus
 
-def SendRequestToAppScript(functioo: str, payload: dict):
+def SendRequestToAppScript(function: str, payload: dict):
 	url = settings["appScriptUrl"] + function
 
 	data = json.dumps(payload)

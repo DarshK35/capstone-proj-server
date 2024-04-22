@@ -16,7 +16,7 @@ def CreateModel():
 @app.route("/trainModel", methods = ["POST"])
 def TrainModel():
 	response = minimalPredictor.TrainModel()
-	minimalGeneral.SendRequestToAppScript("predictModel", response)
+	minimalGeneral.SendRequestToAppScript("trainModel", response)
 	return jsonify(response)
 
 @app.route("/predictModel", methods = ["POST"])

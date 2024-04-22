@@ -93,7 +93,7 @@ def TrainModel():
 			"message": "Model trained successfully",
 			"loss": history.history["loss"],
 			"epochsTrained": len(history.history["loss"]),
-			"finalAccuracy": (1 - min(history.history["val_loss"][-settings["model"]["earlyStoppingPatience"]])) * 100
+			"finalAccuracy": (1 - min(history.history["val_loss"][-settings["model"]["earlyStoppingPatience"]:])) * 100
 		}
 		return response
 	except Exception as ex:
