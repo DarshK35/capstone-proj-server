@@ -1,25 +1,25 @@
-import os
-import numpy
-import pandas
+import requests
+import json
 
-from googleapiclient.discovery import build
-from google.oauth2.service_account import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
+# Define the URL of your Google Apps Script web app
+url = 'https://script.google.com/macros/s/AKfycbwGLcWrSOUviVH6fPV-oLppRw8CJzZDlLLCq9ftUZqiPrcKRyhsVcgpeUex67G4AV9T/exec?action=predictModel'
 
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+# Example data for the trainModel function
+data = {
+	"result": "OK",
+	"message": "Predicted on data",
+	"predict": 42.5
+}
 
-def Authenticate():
-	cred = None
+# Convert the data to JSON format
+payload = json.dumps(data)
 
-	if(os.path.exists("token.json")):
-		cred = Credentials.from_service_account_file("token.json", scopes = SCOPES)
+headers = {
+	"Content-Type": "application/json"
+}
 
-	print(cred)
-	print(cred.valid)
+# Send the POST request
+response = requests.post(url, data=payload, headers = headers)
 
-	service = build('sheets', 'v4', credentials=cred)
-	print(service)
-
-
-Authenticate()
+# Print the response
+print(response.text)

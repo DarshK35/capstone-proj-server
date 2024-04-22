@@ -71,7 +71,7 @@ def TrainModel():
 		model = load_model(settings["modelPath"])
 		earlyStopping = EarlyStopping(
 			monitor = 'val_loss',
-			patience = 7,
+			patience = settings["model"]["earlyStoppingPatience"],
 			restore_best_weights = True
 		)
 		history = model.fit(
@@ -91,7 +91,7 @@ def TrainModel():
 		response = {
 			"result": "OK",
 			"message": "Model trained successfully",
-			"trainStatistics": history.history,
+			"loss": history.history["loss"],
 			"epochsTrained": len(history.history["loss"]),
 			"finalAccuracy": (1 - history.history["val_loss"][-1]) * 100
 		}
@@ -103,6 +103,35 @@ def TrainModel():
 		}
 
 
-def PredictModel(data: dict):
+def PredictModel(d: dict):
+	from keras.models import load_model
+	from sklearn.preprocessing import StandardScaler
+	
+	try:
+		dataParams = settings["datasetParams"]
+		data = pd.DataFrame(d)
 
-	[]
+		with open(settings["scalerPath"]["xScaler"], "rb") as file:
+			xScaler = pickle.load(file)
+		with open(settings["scalerPath"]["yScaler"], "rb") as file:
+			yScaler = pickle.load(file)
+		
+		x = data[dataParams["features"]]
+		xScaled = xScaler.transform(x.to_numpy())
+
+		model = load_model(settings["modelPath"])
+		yPred = model.predict(xScaled)
+
+		yScaled = yScaler.inverse_transform(yPred)
+
+		return {
+			"result": "OK",
+			"message": "Predicted on data",
+			"predicted": yScaled
+		}
+
+	except Exception as ex:
+		return {
+			"result": "ERR",
+			"message": str(ex)
+		}	

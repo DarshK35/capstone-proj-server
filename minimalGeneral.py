@@ -1,12 +1,13 @@
-def RefreshDataset() -> bool:
-	import requests
-	import json
+import requests
+import json
 
+settings = json.loads(open("appSettings.json", "r").read())
+
+def RefreshDataset() -> dict:
 	try:
 		resultStatus = {}
 
-		settings = json.loads(open("appSettings.json", "r").read())
-		url = settings["dataUrl"]
+		url = settings["appScriptUrl"] + "getData"
 
 		if url is None:
 			resultStatus["result"] = "ERR"
@@ -27,3 +28,10 @@ def RefreshDataset() -> bool:
 		resultStatus["message"] = str(ex)
 
 	return resultStatus
+
+def SendRequestToAppScript(functioo: str, payload: dict):
+	url = settings["appScriptUrl"] + function
+
+	data = json.dumps(payload)
+	response = requests.post(url, data = data)
+	return response

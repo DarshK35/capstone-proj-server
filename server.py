@@ -17,12 +17,20 @@ def CreateModel():
 def TrainModel():
 	response = minimalPredictor.TrainModel()
 	return jsonify(response)
+	minimalGeneral.SendRequestToAppScript("predictModel", response)
 
 @app.route("/predictModel", methods = ["POST"])
 def PredictModel():
-	data = request.json
-	response = minimalPredictor.PredictModel(data)
-	return jsonify({"result": "OK"})
+	try:
+		data = request.json
+		response = minimalPredictor.PredictModel(data)
+	except Exception as ex:
+		response = {
+			"result": "ERR",
+			"message": "Invalid POST request, need data for prediction"
+		}
+	minimalGeneral.SendRequestToAppScript("predictModel", response)
+	return jsonify(response)
 
 @app.route("/refreshDataset", methods = ['POST'])
 def RefreshDataset():
