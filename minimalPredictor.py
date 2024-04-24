@@ -78,6 +78,7 @@ def TrainModel():
 			xScaled,
 			yScaled,
 			epochs = settings["model"]["trainEpochs"],
+			batch_size = 128,
 			validation_split = 0.1,
 			callbacks = [earlyStopping]
 		)

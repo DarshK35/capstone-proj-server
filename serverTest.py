@@ -3,7 +3,7 @@ import requests
 
 import pandas as pd
 
-url = "http://localhost:5000/"
+url = "https://capstone-proj-server.onrender.com/"
 
 fnc = input("Enter endpoint to test: ")
 
