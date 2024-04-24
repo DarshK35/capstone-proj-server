@@ -110,7 +110,7 @@ def PredictModel(d: dict):
 	
 	try:
 		dataParams = settings["datasetParams"]
-		data = pd.DataFrame({[d]})
+		data = pd.DataFrame(d, index = [0])
 
 		with open(settings["scalerPath"]["xScaler"], "rb") as file:
 			xScaler = pickle.load(file)
