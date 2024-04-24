@@ -1,5 +1,5 @@
 numpy
 pandas
-tensorflow
+tensorflow-cpu
 scikit-learn
 flask
