@@ -49,7 +49,7 @@ def DebugSystem():
 	except Exception as ex:
 		response = {
 			"result": "ERR",
-			"message": "Invalid POST request, need data for prediction"
+			"message": str(ex)
 		}
 		
 	return jsonify(response)
