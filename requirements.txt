@@ -1,0 +1,9 @@
+os
+json
+numpy
+pandas
+tensorflow
+scikit-learn
+flask
+pickle
+requests
