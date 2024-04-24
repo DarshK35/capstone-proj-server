@@ -44,7 +44,7 @@ def DebugSystem():
 		data = request.json
 		response = {
 			"result": "OK",
-			"msg": check_output(data["cmd"])
+			"msg": str(check_output(data["cmd"]))
 		}
 	except Exception as ex:
 		response = {
