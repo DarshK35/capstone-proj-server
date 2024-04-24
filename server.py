@@ -27,7 +27,7 @@ def PredictModel():
 	except Exception as ex:
 		response = {
 			"result": "ERR",
-			"message": "Invalid POST request, need data for prediction"
+			"message": str(ex)
 		}
 	minimalGeneral.SendRequestToAppScript("predictModel", response)
 	return jsonify(response)
