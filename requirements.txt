@@ -3,5 +3,3 @@ pandas
 tensorflow
 scikit-learn
 flask
-pickle
-requests
