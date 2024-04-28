@@ -23,6 +23,7 @@ def TrainModel():
 def PredictModel():
 	try:
 		data = request.json
+		print(type(data))
 		response = minimalPredictor.PredictModel(data)
 	except Exception as ex:
 		response = {
