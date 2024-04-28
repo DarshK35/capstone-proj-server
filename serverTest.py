@@ -3,16 +3,20 @@ import requests
 import subprocess
 
 import pandas as pd
+import random
 
-url = "https://capstone-proj-server.onrender.com/"
+# url = "https://capstone-proj-server.onrender.com/"
+url = "http://localhost:5000/"
 
 fnc = input("Enter endpoint to test: ")
 
 if fnc == "predictModel":
 	data = pd.read_json("Saved/dataset.json")
-	data = data[-1]
+	data = data.iloc[random.randint(0, data.shape[0] - 1), :]
 
-	response = requests.post(url + fnc, data = data.to_json())
+	print(data.to_json())
+
+	response = requests.post(url + fnc, json = data.to_json())
 elif fnc == "debugSystem":
 	cmd = input("Enter Command: ")
 	nArgs = int(input("Enter number of args: "))

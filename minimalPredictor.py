@@ -54,12 +54,13 @@ def TrainModel():
 
 	try:
 		dataset = pd.read_json(settings["dataPath"])
-		dataset = dataset.dropna()
+		dataset = dataset.replace('', pd.NA).dropna()
 
 		datasetParams = settings["datasetParams"]
-
+		
 		x = dataset[datasetParams["features"]]
 		y = dataset[datasetParams["target"]]
+
 
 		xScaler = StandardScaler()
 		yScaler = StandardScaler()
@@ -78,7 +79,7 @@ def TrainModel():
 			xScaled,
 			yScaled,
 			epochs = settings["model"]["trainEpochs"],
-			batch_size = 128,
+			batch_size = 512,
 			validation_split = 0.1,
 			callbacks = [earlyStopping]
 		)
@@ -100,16 +101,18 @@ def TrainModel():
 	except Exception as ex:
 		return {
 			"result": "ERR",
-			"message": str(ex)
+			"message": str(ex),
+			"traceback": ex.with_traceback()
 		}
 
 
 def PredictModel(d: dict):
 	from keras.models import load_model
 	from sklearn.preprocessing import StandardScaler
-	
+
 	try:
 		dataParams = settings["datasetParams"]
+		d = json.loads(d)
 		data = pd.DataFrame(d, index = [0])
 
 		with open(settings["scalerPath"]["xScaler"], "rb") as file:
@@ -128,7 +131,7 @@ def PredictModel(d: dict):
 		return {
 			"result": "OK",
 			"message": "Predicted on data",
-			"predicted": yScaled
+			"predict": float(yScaled.flatten()[0])
 		}
 
 	except Exception as ex:
