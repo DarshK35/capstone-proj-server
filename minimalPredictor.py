@@ -112,7 +112,7 @@ def PredictModel(d: dict):
 
 	try:
 		dataParams = settings["datasetParams"]
-		d = json.loads(d)
+		#d = json.loads(d)
 		data = pd.DataFrame(d, index = [0])
 
 		with open(settings["scalerPath"]["xScaler"], "rb") as file:
